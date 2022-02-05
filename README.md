@@ -9,6 +9,8 @@ shinylogin wraps shiny and bs4Dash to provide user login and registration functi
 
 WARNING: shinylogin is experimental and I'm not a security specialist. It will ensure that casual users log in before they can access your app and implements basic security good practices such as encrypting stored passwords & preventing SQL injection, but it's unlikely to survive an attack from a hacker who knows what they're doing.
 
+If you need robust application security, please investigate [shinyapps.io](https://www.shinyapps.io/) paid tiers or RStudio Connect.
+
 shinylogin is close to being useable but still has big gaps and will almost certainly see more breaking changes.
 
 ## Installation
@@ -48,19 +50,20 @@ remotes::install_github("neilcharles/shinylogin")
 ## Getting Started
 
 Once you have installed the shinylogin package, in RStudio create a new project with
-*File > New Project > shinylogin Project*
+- *File > New Project > shinylogin Project*
 
 shinylogin will then create a working minimal example project.
 
 Run *app.R* as you normally would with a shiny app.
 
 You will see three shinylogin files at the top level of the project directory.
-*shinylogin_server.R*
-*shinylogin_ui.R*
-*shinylogin_sidebar.R*
+- *shinylogin_server.R*
+- *shinylogin_ui.R*
+- *shinylogin_sidebar.R*
 
 These files should be used to write your app code and are called by *app.R*,
-which keeps your own code separate from the login workflow.
+which keeps your own code separate from the login workflow. You probably don't want to edit *app.R* in normal 
+use of the shinylogin package.
 
 shinylogin uses [bs4Dash](https://rinterface.github.io/bs4Dash/index.html) so the app UI code that you write
 should be designed to fit within *bs4DashPage()* and *bs4DashSidebar()* functions. Your code will be inserted into these functions by shinylogin.
