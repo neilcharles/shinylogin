@@ -23,26 +23,15 @@ server <- function(input, output, session) {
   # loginAppServer combines the login wrapper with your shiny app --------------
   user <- loginAppServer('login_framework', app_body = app_body, app_sidebar = app_sidebar, config = shinylogin_config)
 
-  app_body <- tagList(
-    # App body code that would normally be placed in the UI goes here ----------
-    verbatimTextOutput('something_in_the_app_body')
-  )
+  # App body code that would normally be placed in the UI goes here ----------
+  source('shinylogin_ui.R', local = TRUE)
 
   # Define menu items in the app sidebar here.
   # They will be placed below the project selector and above the admin menu
-  app_sidebar <- tagList(
-         sidebarMenu(
-     id = 'main_menu',
-     menuItem(
-       text = 'Menu Item 1',
-       tabName = 'menu1'
-     ))
-
-
-  )
+  source('shinylogin_sidebar.R', local = TRUE)
 
   # Server code goes here ------------------------------------------------------
-  output$something_in_the_app_body <- renderText(glue::glue('Inserting {user$email} into the app'))
+  source('shinylogin_server.R', local = TRUE)
 
 }
 
@@ -51,8 +40,58 @@ shinyApp(ui = ui, server = server)
 "
 writeLines(app.R, con = file.path(path, "app.R"))
 
-writeLines("#----------- Write UI code here ---------------", con = file.path(path, "shinylogin_ui.R"))
+#-------------------------------------------------------------------------------
 
-writeLines("#----------- Write Server code here -----------", con = file.path(path, "shinylogin_server.R"))
+shinylogin_ui.R <-
+
+  "
+# Define UI for application that draws a histogram
+# Sidebar with a slider input for number of bins
+app_body <- tagList(
+  verbatimTextOutput('something_in_the_app_body'),
+  sliderInput('bins',
+              'Number of bins:',
+              min = 1,
+              max = 50,
+              value = 30),
+  # Show a plot of the generated distribution
+  plotOutput('distPlot')
+)"
+
+writeLines(shinylogin_ui.R, con = file.path(path, "shinylogin_ui.R"))
+
+#-------------------------------------------------------------------------------
+
+shinylogin_server.R <-
+  "
+output$something_in_the_app_body <- renderText(glue::glue('Hello {user$email}'))
+
+output$distPlot <- renderPlot({
+  # generate bins based on input$bins from ui.R
+  x    <- faithful[, 2]
+  bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+  # draw the histogram with the specified number of bins
+  hist(x, breaks = bins, col = 'darkgray', border = 'white')
+})
+"
+
+writeLines(shinylogin_server.R, con = file.path(path, "shinylogin_server.R"))
+
+#-------------------------------------------------------------------------------
+
+shinylogin_sidebar.R <-
+  "
+app_sidebar <- tagList(
+  sidebarMenu(
+    id = 'main_menu',
+    menuItem(
+      text = 'Menu Item 1',
+      tabName = 'menu1'
+    ))
+)
+"
+
+writeLines(shinylogin_sidebar.R, con = file.path(path, "shinylogin_sidebar.R"))
 
 }

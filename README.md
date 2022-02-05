@@ -17,6 +17,12 @@ shinylogin is close to being useable but still has big gaps and will almost cert
 remotes::install_github("neilcharles/shinylogin")
 ```
 
+---
+
+![Login screen example](man/figures/login_example.png)
+
+---
+
 ## Features
 
 - App login with username and password, plus the option to include authentication using a Google account
@@ -39,8 +45,36 @@ remotes::install_github("neilcharles/shinylogin")
 
 - Option to specify a database connection to store user details, or let shinylogin default to local storage
 
----
+## Getting Started
 
-![Login screen example](man/figures/login_example.png)
+Once you have installed the shinylogin package, in RStudio create a new project with
+*File > New Project > shinylogin Project*
 
----
+shinylogin will then create a working minimal example project.
+
+Run *app.R* as you normally would with a shiny app.
+
+You will see three shinylogin files at the top level of the project directory.
+*shinylogin_server.R*
+*shinylogin_ui.R*
+*shinylogin_sidebar.R*
+
+These files should be used to write your app code and are called by *app.R*,
+which keeps your own code separate from the login workflow.
+
+shinylogin uses [bs4Dash](https://rinterface.github.io/bs4Dash/index.html) so the app UI code that you write
+should be designed to fit within *bs4DashPage()* and *bs4DashSidebar()* functions. Your code will be inserted into these functions by shinylogin.
+
+It is recommended that you have at least a little knowledge of bs4Dash before trying to write code for shinylogin.
+
+## Google Authentication
+
+Guide coming soon
+
+## shinylogin Options
+
+Guide coming soon
+
+## Forgotten passwords and smtp authentication
+
+Guide coming soon
