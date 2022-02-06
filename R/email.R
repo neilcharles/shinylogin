@@ -1,5 +1,7 @@
 send_password_reset <- function(send_to_email = NULL, new_password = NULL){
 
+  if(!user_exists(send_to_email)) return(NULL)
+
   message_body <- as.character(glue::glue("Your new password is: {new_password}"))
   host <- Sys.getenv("shinylogin_smtp_host")
   port <- as.numeric(Sys.getenv("shinylogin_smtp_port"))

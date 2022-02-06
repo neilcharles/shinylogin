@@ -283,7 +283,8 @@ loginAppServer <- function(id, app_body = NULL, app_sidebar = NULL, config = NUL
 
                         observeEvent(input$forgot_pw_btn, {
 
-                          send_password_reset(input$forgot_password_email, "temp_password")
+                          send_password_reset(input$forgot_password_email,
+                                              user_generate_new_password(input$forgot_password_email))
 
                           shiny::showModal(
                             shiny::modalDialog(

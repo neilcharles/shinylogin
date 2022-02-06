@@ -55,6 +55,8 @@ user_change_password <- function(user_email = NULL, plaintext_password = NULL){
 
   con <- logindb_connect()
 
+  user_email <- tolower(user_email)
+
   if(!user_exists(user_email)){
     DBI::dbDisconnect(con)
     stop(glue::glue("User does not exist"))
@@ -78,6 +80,15 @@ user_change_password <- function(user_email = NULL, plaintext_password = NULL){
 
 }
 
+user_generate_new_password <- function(user_email = NULL){
+
+  new_pw <- stringi::stri_rand_strings(n=1, length=8, pattern="[A-Za-z0-9]")
+
+  user_change_password(user_email = user_email, plaintext_password = new_pw)
+
+  new_pw
+
+}
 
 
 #' Check Whether A User Exists in the Login Database
