@@ -18,7 +18,8 @@ Imports:
   dplyr,
   glue,
   uuid,
-  mailR
+  mailR,
+  stringi
 Suggests: 
     rmarkdown,
     knitr

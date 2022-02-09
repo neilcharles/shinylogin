@@ -58,7 +58,6 @@ loginAppServer <- function(id, app_body = NULL, app_sidebar = NULL, config = NUL
                           )
                         }
 
-                        logindb_create()
 
                         output$loginapp <- renderUI({
                           if (user_is_logged_in()) {

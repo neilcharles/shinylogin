@@ -452,7 +452,12 @@ logindb_delete <- function(silent = FALSE){
 #' @export
 #'
 #' @examples
-logindb_create <- function(){
+logindb_create <- function(warn = TRUE){
+  if(warn){
+    if(readline(prompt = "Are you sure? Existing user database will be deleted. Type 'yes' to continue: ")!='yes'){
+      return()
+    }
+  }
 
   logindb_delete(silent = TRUE)
 
@@ -470,20 +475,6 @@ logindb_create <- function(){
 
   DBI::dbExecute(
     con,
-    "INSERT INTO users VALUES
-    ('neil.d.charles@gmail.com',
-    'charlesy',
-    '8fb0e64410350d36eb5c2e2c2d74bc6fbf63228def656356b8199c2c469938b1',
-    1),
-    ('another.user@gmail.com',
-    'another_user',
-    'c6ca0fd9782fb6d15f927a4f5e4afe8d622d744bcb1fc9c6c3377292d338ecc1',
-    0)
-    "
-  )
-
-  DBI::dbExecute(
-    con,
     "CREATE TABLE IF NOT EXISTS projects (
                   projectId varchar(256),
                   projectName varchar(256)
@@ -492,33 +483,11 @@ logindb_create <- function(){
 
   DBI::dbExecute(
     con,
-    "INSERT INTO projects VALUES
-    ('neil1',
-    'My Default Project'),
-    ('another1',
-    'Another Default Project')"
-  )
-
-
-  DBI::dbExecute(
-    con,
     "CREATE TABLE IF NOT EXISTS permissions (
                   projectId varchar(256),
                   email varchar(256),
                   privilege int
                  )"
-  )
-
-
-  DBI::dbExecute(
-    con,
-    "INSERT INTO permissions VALUES
-    ('neil1',
-    'neil.d.charles@gmail.com',
-    1),
-      ('another1',
-    'another.user@gmail.com',
-    1)"
   )
 
   DBI::dbDisconnect(con)

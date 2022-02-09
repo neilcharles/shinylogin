@@ -15,11 +15,6 @@ accountManagementUI <- function(id) {
         actionButton(ns("change_password"), "Change Password"),
         hr(),
         actionButton(ns("delete_account"), "Delete My Account", status = "danger")
-      ),
-      tabPanel(
-        title = "Site",
-        h2("Manage Site-Wide Accounts"),
-        hr()
       )
     )
 

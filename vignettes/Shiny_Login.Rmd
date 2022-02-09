@@ -22,7 +22,7 @@ options(shiny.port = 4093)
 # A one line UI because login requires everything to happen server-side --------
 ui <- loginAppUI('login_framework')
 
-server <- function(input, output, session) {
+server <- function(input, output, session){
   
   # loginAppServer combines the login wrapper with your shiny app --------------
   user <- loginAppServer('login_framework', app_body = app_body, app_sidebar = app_sidebar, config = shinylogin_config)
